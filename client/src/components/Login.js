@@ -6,7 +6,7 @@ const initialForm = {
   password:''
 }
 
-const Login = () => {
+const Login = (props) => {
   const [formValues,setFormValues] = useState(initialForm)
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
@@ -26,6 +26,8 @@ const Login = () => {
     axios.post('http://localhost:5000/api/login/',formValues)
     .then(res => {
       console.log(res.data)
+      window.localStorage.setItem('token',res.data.payload)
+      props.history.push('/protected')
     })
     .catch(err => console.log(err))
   }
