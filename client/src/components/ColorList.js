@@ -28,8 +28,9 @@ const ColorList = ({ colors, updateColors }) => {
     axiosWithAuth().put(`colors/${colorToEdit.id}`,colorToEdit)
     .then(res => {
       console.log(res.data)
-      updateColors(colors)
+      updateColors(colors.map(color => color.id === res.data.id ? res.data : color))
       setEditing(false)
+      
     })
     .catch(err => console.log(err))
   };
@@ -38,7 +39,8 @@ const ColorList = ({ colors, updateColors }) => {
     // make a delete request to delete this color
     axiosWithAuth().delete(`colors/${color.id}`)
     .then(res => {
-      console.log(res)
+      console.log("DELETE SUCCESS",res)
+      updateColors(colors.filter(color => color.id !== res.data.id))
     })
     .catch(err => console.log(err))
 
