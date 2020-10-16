@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import axios from 'axios'
+import {axiosWithAuth} from '../utils/axiosWithAuth'
 
 const initialForm = {
   username:'',
@@ -23,7 +23,7 @@ const Login = (props) => {
   const handleSubmit = e => {
     e.preventDefault()
 
-    axios.post('http://localhost:5000/api/login/',formValues)
+    axiosWithAuth().post('login/',formValues)
     .then(res => {
       console.log(res.data)
       window.localStorage.setItem('token',res.data.payload)
